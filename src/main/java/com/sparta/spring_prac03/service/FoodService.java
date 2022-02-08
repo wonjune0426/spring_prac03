@@ -23,6 +23,8 @@ public class FoodService {
                 throw new IllegalArgumentException("같은 가게에서는 동일한 음식 등록이 불가 합니다.");
             }
         }
+
+
         if(price<100||price>1000000){
             throw new IllegalArgumentException("금액은 100원 이상 1000000원 이하만 가능합니다.");
         }else if(price%100!=0){
