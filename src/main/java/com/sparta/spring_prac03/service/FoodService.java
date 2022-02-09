@@ -27,7 +27,8 @@ public class FoodService {
 
     @Transactional
     public void foodReg(Long restourantId, List<FoodRequestDto> foodList) {
-        Restaurant res = restaurantRepository.findById(restourantId).orElseThrow(() -> new NullPointerException("음식점이 존재하지 않습니다."));
+        Restaurant res = restaurantRepository.findById(restourantId).
+                orElseThrow(() -> new NullPointerException("음식점이 존재하지 않습니다."));
         foodList.stream().forEach(foodRequestDto -> {
             int price = foodRequestDto.getPrice();
             if (price < 100||price>1000000) {

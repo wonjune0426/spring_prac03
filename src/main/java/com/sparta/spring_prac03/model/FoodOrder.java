@@ -1,6 +1,6 @@
 package com.sparta.spring_prac03.model;
 
-import com.sparta.spring_prac03.dto.FoodRequestDto;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -11,7 +11,7 @@ import javax.persistence.*;
 @Getter
 @Entity
 @NoArgsConstructor
-public class Food {
+public class FoodOrder {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private Long id;
@@ -20,14 +20,18 @@ public class Food {
     private String name;
 
     @Column(nullable = false)
-    private int price;
+    private int quantity;
 
     @Column(nullable = false)
-    private Long restourantId;
+    private int price;
 
-    public Food(FoodRequestDto foodRequestDto,Long restourantId){
-        this.name=foodRequestDto.getName();
-        this.price=foodRequestDto.getPrice();
-        this.restourantId=restourantId;
+    @ManyToOne
+    private Order order;
+
+    public FoodOrder(String name,int quantity,int price,Order order){
+        this.name=name;
+        this.quantity=quantity;
+        this.price=price;
+        this.order=order;
     }
 }
