@@ -22,7 +22,9 @@ public class FoodService {
 
     @Transactional
     public List<Food> getFoodList(Long restourantId) {
-        return foodRepository.findAllByRestourantId(restourantId);
+        Restaurant res=restaurantRepository.findById(restourantId).
+                orElseThrow(() -> new NullPointerException("음식점이 존재하지 않습니다."));
+        return foodRepository.findFoodByRestaurant(res);
     }
 
     @Transactional
@@ -36,14 +38,15 @@ public class FoodService {
             } else if(price % 100 != 0) {
                 throw new IllegalArgumentException("음식 가격은 100원 단위로 입력해야 합니다.");
             }
-            Optional<Food> found = foodRepository.findFoodByRestourantIdAndName(restourantId, foodRequestDto.getName());
+            Optional<Food> found =foodRepository.findFoodByRestaurantAndName(res,foodRequestDto.getName());
             if (found.isPresent()) {
                 throw new IllegalArgumentException("중복된 이름의 음식이 존재합니다.");
             }
 
-            Food food=new Food(foodRequestDto,restourantId);
+            Food food=new Food(foodRequestDto);
             foodRepository.save(food);
         });
     }
 }
+
 

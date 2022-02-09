@@ -6,14 +6,18 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Setter
 @Getter
 @Entity
 @NoArgsConstructor
+@Table(name = "food")
 public class Food {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
+    @Column(name = "food_id")
     private Long id;
 
     @Column(nullable = false)
@@ -22,12 +26,17 @@ public class Food {
     @Column(nullable = false)
     private int price;
 
-    @Column(nullable = false)
-    private Long restourantId;
 
-    public Food(FoodRequestDto foodRequestDto,Long restourantId){
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "restaurant_id", nullable = false)
+    private Restaurant restaurant;
+
+    @OneToMany(mappedBy = "food")
+    private List<FoodOrder> foodOrders = new ArrayList<>();
+
+    public Food(FoodRequestDto foodRequestDto){
         this.name=foodRequestDto.getName();
         this.price=foodRequestDto.getPrice();
-        this.restourantId=restourantId;
     }
+
 }

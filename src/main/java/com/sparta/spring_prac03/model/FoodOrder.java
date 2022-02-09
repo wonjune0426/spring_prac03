@@ -25,13 +25,18 @@ public class FoodOrder {
     @Column(nullable = false)
     private int price;
 
-    @ManyToOne
-    private Order order;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="orders_id", nullable = false)
+    private Orders orders;
 
-    public FoodOrder(String name,int quantity,int price,Order order){
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="food_id", nullable = false)
+    private Food food;
+
+    public FoodOrder(String name, int quantity, int price, Orders orders){
         this.name=name;
         this.quantity=quantity;
         this.price=price;
-        this.order=order;
+        this.orders = orders;
     }
 }
