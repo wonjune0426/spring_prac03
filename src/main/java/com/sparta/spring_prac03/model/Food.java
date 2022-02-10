@@ -1,5 +1,6 @@
 package com.sparta.spring_prac03.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.sparta.spring_prac03.dto.FoodRequestDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -30,8 +31,8 @@ public class Food {
     @JoinColumn(name = "restaurant_id", nullable = false)
     private Restaurant restaurant;
 
-    @OneToMany(mappedBy = "food")
-    private List<FoodOrder> foodOrders = new ArrayList<>();
+//    @OneToMany(mappedBy = "food")
+//    private List<FoodOrder> foodOrders = new ArrayList<>();
 
 
     public Food(FoodRequestDto foodRequestDto, Restaurant res) {

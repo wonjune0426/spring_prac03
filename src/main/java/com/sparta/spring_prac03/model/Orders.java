@@ -1,5 +1,6 @@
 package com.sparta.spring_prac03.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -14,31 +15,26 @@ import java.util.List;
 @Table(name = "orders")
 @NoArgsConstructor
 public class Orders {
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private Long id; // 주문id
-
-//    @Column(nullable = false)
-//    private String restaurantName;
-
-//    @Column(nullable = false)
-//    private int deliveryFee;
 
     @Column(nullable = false)
     private int totalPrice;
 
-//    @OneToMany(mappedBy = "orders")
-//    private List<FoodOrder> foodOrderList=new ArrayList<>();
-
-//    public void addFoodOrder(FoodOrder foodOrder){
-//        this.foodOrderList.add(foodOrder);
-//    }
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "restaurant_id", nullable = false)
     private Restaurant restaurant; // 음식적ID
 
-    @OneToMany(mappedBy = "orders", cascade = CascadeType.ALL)
+//    @OneToMany(mappedBy = "orders", cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "orders_id")
     private List<FoodOrder> foodOrders = new ArrayList<>();
 
 
+    public Orders(Restaurant res,int sumprice, List<FoodOrder> foodOrderList2) {
+        this.restaurant=res;
+        this.totalPrice=sumprice;
+        this.foodOrders=foodOrderList2;
+    }
 }
