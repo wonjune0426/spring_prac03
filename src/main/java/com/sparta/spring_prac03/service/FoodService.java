@@ -43,7 +43,7 @@ public class FoodService {
                 throw new IllegalArgumentException("중복된 이름의 음식이 존재합니다.");
             }
 
-            Food food=new Food(foodRequestDto);
+            Food food=new Food(foodRequestDto,res);
             foodRepository.save(food);
         });
     }

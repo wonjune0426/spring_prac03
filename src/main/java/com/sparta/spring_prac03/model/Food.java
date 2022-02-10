@@ -17,7 +17,6 @@ import java.util.List;
 public class Food {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name = "food_id")
     private Long id;
 
     @Column(nullable = false)
@@ -34,9 +33,10 @@ public class Food {
     @OneToMany(mappedBy = "food")
     private List<FoodOrder> foodOrders = new ArrayList<>();
 
-    public Food(FoodRequestDto foodRequestDto){
+
+    public Food(FoodRequestDto foodRequestDto, Restaurant res) {
         this.name=foodRequestDto.getName();
         this.price=foodRequestDto.getPrice();
+        this.restaurant=res;
     }
-
 }

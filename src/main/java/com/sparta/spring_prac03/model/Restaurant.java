@@ -1,5 +1,6 @@
 package com.sparta.spring_prac03.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.sparta.spring_prac03.dto.RestaurantRequestDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,7 +18,6 @@ import java.util.List;
 public class Restaurant {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name = "restaurant_id")
     private Long id;
 
     @Column(nullable = false,unique = true)
@@ -33,6 +33,7 @@ public class Restaurant {
     private List<Orders> orders = new ArrayList<>();
 
     @OneToMany(mappedBy = "restaurant")
+    @JsonIgnoreProperties({"restaurant"}) // 무한참조 방지
     private List<Food> foods = new ArrayList<>();
 
     public Restaurant(RestaurantRequestDto requestDto){
